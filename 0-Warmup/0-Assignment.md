@@ -35,10 +35,13 @@ Please provide answers to these questions using markdown notation and place them
 
 
 3. Please provide a link to the repository you are using for this class.
+
 https://github.com/vincentxbui/cs283
 
 4. Briefly describe what you want to get out of this class.
+
 From this class, I want an understanding of how the Linux operating system runs programs and protects hardware resources. I also want to learn about other features of Linux and the support they can provide.
 
 5. Briefly describe any concerns you might be having with being successful in this class (if any).
+
 The only concern I might have with being successful in this class is the amount of workload I have this quarter.
