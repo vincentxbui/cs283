@@ -246,15 +246,15 @@ int count_db_records(int fd)
         return ERR_DB_FILE;
     }
 
-    ssize_t bytes_read;
+    ssize_t bytes_read_of_student;
 
-    while ((bytes_read = read(fd, &student_data, STUDENT_RECORD_SIZE)) > 0) {
+    while ((bytes_read_of_student = read(fd, &student_data, STUDENT_RECORD_SIZE)) > 0) {
         if (memcmp(&student_data, &EMPTY_STUDENT_RECORD, STUDENT_RECORD_SIZE) != 0) {
             count_of_records++;
         }
     }
 
-    if (bytes_read == -1) {
+    if (bytes_read_of_student == -1) {
         printf(M_ERR_DB_READ);
         return ERR_DB_FILE;
     }
@@ -311,9 +311,9 @@ int print_db(int fd)
         return ERR_DB_FILE;
     }
 
-    ssize_t bytes_read;
+    ssize_t bytes_read_of_student;
 
-    while ((bytes_read = read(fd, &student_data, STUDENT_RECORD_SIZE)) > 0) {
+    while ((bytes_read_of_student = read(fd, &student_data, STUDENT_RECORD_SIZE)) > 0) {
         if (memcmp(&student_data, &EMPTY_STUDENT_RECORD, STUDENT_RECORD_SIZE) != 0) {
             if (!printed) {
                 printf(STUDENT_PRINT_HDR_STRING, "ID", "FIRST_NAME", "LAST_NAME", "GPA");
@@ -324,7 +324,7 @@ int print_db(int fd)
         }
     }
 
-    if (bytes_read == -1) {
+    if (bytes_read_of_student == -1) {
         printf(M_ERR_DB_READ);
         return ERR_DB_FILE;
     }
