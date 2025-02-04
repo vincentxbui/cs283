@@ -183,24 +183,19 @@ int del_student(int fd, int id)
 {
     // TODO
     student_t student_data;
-    off_t offset = id * STUDENT_RECORD_SIZE;
+    int result = get_student(fd, id, &student_data);
 
-    if (lseek(fd, offset, SEEK_SET) == -1) {
-        printf(M_ERR_DB_READ);
-        return ERR_DB_FILE;
-    }
-
-    ssize_t bytes_read = read(fd, &student_data, STUDENT_RECORD_SIZE);
-
-    if (bytes_read == -1) {
-        printf(M_ERR_DB_READ);
-        return ERR_DB_FILE;
-    }
-
-    if (bytes_read != STUDENT_RECORD_SIZE || student_data.id == 0) {
+    if (result == SRCH_NOT_FOUND) {
         printf(M_STD_NOT_FND_MSG, id);
         return ERR_DB_OP;
     }
+
+    if (result == ERR_DB_FILE) {
+        printf(M_ERR_DB_READ);
+        return ERR_DB_FILE;
+    }
+
+    off_t offset = id * STUDENT_RECORD_SIZE;
 
     if (lseek(fd, offset, SEEK_SET) == -1) {
         printf(M_ERR_DB_READ);
@@ -253,7 +248,7 @@ int count_db_records(int fd)
 
     ssize_t bytes_read;
 
-    while ((bytes_read = read(fd, &student_data, STUDENT_RECORD_SIZE)) == STUDENT_RECORD_SIZE) {
+    while ((bytes_read = read(fd, &student_data, STUDENT_RECORD_SIZE)) > 0) {
         if (memcmp(&student_data, &EMPTY_STUDENT_RECORD, sizeof(student_t)) != 0) {
             count_of_records++;
         }
