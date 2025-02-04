@@ -132,7 +132,7 @@ int add_student(int fd, int id, char *fname, char *lname, int gpa)
         return ERR_DB_FILE;
     }
 
-    if (bytes_read == STUDENT_RECORD_SIZE && student_data.id != 0)
+    if (bytes_read == STUDENT_RECORD_SIZE && memcmp(&student_data, &EMPTY_STUDENT_RECORD, sizeof(student_t)) != 0)
     {
         printf(M_ERR_DB_ADD_DUP, id);
         return ERR_DB_OP;
@@ -261,9 +261,9 @@ int count_db_records(int fd)
     }
 
     ssize_t bytes_read;
-    
+
     while ((bytes_read = read(fd, &student_data, STUDENT_RECORD_SIZE)) == STUDENT_RECORD_SIZE) {
-        if (student_data.id != 0) {
+        if (memcmp(&student_data, &EMPTY_STUDENT_RECORD, sizeof(student_t)) != 0) {
             count_of_records++;
         }
     }
