@@ -69,13 +69,13 @@ int get_student(int fd, int id, student_t *s)
         return ERR_DB_FILE;
     }
 
-    ssize_t bytes_of_student = read(fd, s, STUDENT_RECORD_SIZE);
+    ssize_t bytes_read_of_student = read(fd, s, STUDENT_RECORD_SIZE);
 
-    if (bytes_of_student == -1) {
+    if (bytes_read_of_student == -1) {
         return ERR_DB_FILE;
     }
 
-    if (bytes_of_student != STUDENT_RECORD_SIZE) {
+    if (bytes_read_of_student != STUDENT_RECORD_SIZE) {
         return SRCH_NOT_FOUND;
     }
 
@@ -123,14 +123,14 @@ int add_student(int fd, int id, char *fname, char *lname, int gpa)
         return ERR_DB_FILE;
     }
 
-    ssize_t bytes_read = read(fd, &student_data, STUDENT_RECORD_SIZE);
+    ssize_t bytes_read_of_student = read(fd, &student_data, STUDENT_RECORD_SIZE);
 
-    if (bytes_read == -1) {
+    if (bytes_read_of_student == -1) {
         printf(M_ERR_DB_READ);
         return ERR_DB_FILE;
     }
 
-    if (bytes_read == STUDENT_RECORD_SIZE && memcmp(&student_data, &EMPTY_STUDENT_RECORD, STUDENT_RECORD_SIZE) != 0) {
+    if (bytes_read_of_student == STUDENT_RECORD_SIZE && memcmp(&student_data, &EMPTY_STUDENT_RECORD, STUDENT_RECORD_SIZE) != 0) {
         printf(M_ERR_DB_ADD_DUP, id);
         return ERR_DB_OP;
     }
@@ -303,7 +303,7 @@ int count_db_records(int fd)
 int print_db(int fd)
 {
     // TODO
-    student_t student;
+    student_t student_data;
     bool printed = false;
 
     if (lseek(fd, 0, SEEK_SET) == -1) {
@@ -313,14 +313,14 @@ int print_db(int fd)
 
     ssize_t bytes_read;
 
-    while ((bytes_read = read(fd, &student, STUDENT_RECORD_SIZE)) > 0) {
-        if (memcmp(&student, &EMPTY_STUDENT_RECORD, STUDENT_RECORD_SIZE) != 0) {
+    while ((bytes_read = read(fd, &student_data, STUDENT_RECORD_SIZE)) > 0) {
+        if (memcmp(&student_data, &EMPTY_STUDENT_RECORD, STUDENT_RECORD_SIZE) != 0) {
             if (!printed) {
                 printf(STUDENT_PRINT_HDR_STRING, "ID", "FIRST_NAME", "LAST_NAME", "GPA");
                 printed = true;
             }
-            float calculated_gpa_from_student = student.gpa / 100.0;
-            printf(STUDENT_PRINT_FMT_STRING, student.id, student.fname, student.lname, calculated_gpa_from_student);
+            float calculated_gpa_from_student = student_data.gpa / 100.0;
+            printf(STUDENT_PRINT_FMT_STRING, student_data.id, student_data.fname, student_data.lname, calculated_gpa_from_student);
         }
     }
 
