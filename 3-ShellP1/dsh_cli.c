@@ -52,8 +52,7 @@ int main()
 
     while (1) {
         printf("%s", SH_PROMPT);
-        if (fgets(cmd_buff, ARG_MAX, stdin) == NULL)
-        {
+        if (fgets(cmd_buff, ARG_MAX, stdin) == NULL) {
             printf("\n");
             break;
         }
