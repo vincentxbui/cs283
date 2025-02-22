@@ -52,8 +52,9 @@ int main()
 
     while (1) {
         printf("%s", SH_PROMPT);
-        if (fgets(cmd_buff, ARG_MAX, stdin) == NULL) {
-            printf("\n");
+        if (fgets(cmd_buff, ARG_MAX, stdin) == NULL)
+        {
+        	printf("\n");
             break;
         }
         cmd_buff[strcspn(cmd_buff, "\n")] = '\0';
