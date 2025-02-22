@@ -4,7 +4,7 @@
 
 2. What happens if the fork() system call fails? How does your implementation handle this scenario?
 
-    > **Answer**:  If the fork() system call fails, -1 will be returned. This would mean that the system unable able to create a new child process. The implementation handles this scenario by returning an error.
+    > **Answer**:  If the fork() system call fails, -1 will be returned. This would mean that the system is unable to create a new child process. The implementation handles this scenario by returning an error.
 
 3. How does execvp() find the command to execute? What system environment variable plays a role in this process?
 
@@ -12,7 +12,7 @@
 
 4. What is the purpose of calling wait() in the parent process after forking? What would happen if we didn’t call it?
 
-    > **Answer**:  The purpose of calling wait() in the parent process after forking is to wait for the child process to be done executing before continuing. If wait() was not called, there could be leaks and issues as a result.
+    > **Answer**:  The purpose of calling wait() in the parent process after forking is to wait for the child process to be done executing before continuing. If wait() is not called, there could be leaks and issues as a result.
 
 5. In the referenced demo code we used WEXITSTATUS(). What information does this provide, and why is it important?
 
@@ -24,7 +24,7 @@
 
 7. What changes did you make to your parsing logic compared to the previous assignment? Were there any unexpected challenges in refactoring your old code?
 
-    > **Answer**:  The parsing logic in this assignment parses the input as one single command, while the previous assignment splits the commands with pipes. An unexpected challenge in refactoring the old code was handling quotations since it has to know when a quote started and ended.
+    > **Answer**:  The parsing logic in this assignment parses the input as one single command, while the previous assignment splits the commands with pipes. An unexpected challenge in refactoring the old code was handling quotations since it has to know when a quote starts and ends.
 
 8. For this quesiton, you need to do some research on Linux signals. You can use [this google search](https://www.google.com/search?q=Linux+signals+overview+site%3Aman7.org+OR+site%3Alinux.die.net+OR+site%3Atldp.org&oq=Linux+signals+overview+site%3Aman7.org+OR+site%3Alinux.die.net+OR+site%3Atldp.org&gs_lcrp=EgZjaHJvbWUyBggAEEUYOdIBBzc2MGowajeoAgCwAgA&sourceid=chrome&ie=UTF-8) to get started.
 
